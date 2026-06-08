@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&family=Cinzel:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-green: #2E7D32;
+  --color-light-green: #4CAF50;
+  --color-gold: #FBC02D;
+  --color-gold-light: #fff2cc;
+  --color-bg-yellow: #FFF8E1;
+  --color-white: #FFFFFF;
+  --color-dark-green: #1b4d22;
+  --color-gold-dark: #b8860b;
+  
+  --font-main: 'Poppins', sans-serif;
+  --font-wedding: 'Great Vibes', cursive;
+  --font-heading: 'Cinzel', serif;
+  
+  --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --shadow-gold: 0 4px 15px rgba(251, 192, 45, 0.4);
+  --border-radius-card: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-dark-green);
+  font-family: var(--font-main);
+  color: #333333;
+  overflow: hidden; /* Prevent body scrolling; inner container will scroll */
+}
+
+/* Background image decoration for the outer workspace (desktop view) */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(46, 125, 50, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(251, 192, 45, 0.15) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+/* Mobile Frame Wrapper */
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobile-container {
+  width: 100%;
+  max-width: 480px;
+  height: 100dvh; /* Dynamic viewport height for modern browsers */
+  background-color: var(--color-bg-yellow);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid rgba(251, 192, 45, 0.3);
+  border-right: 1px solid rgba(251, 192, 45, 0.3);
+  scroll-behavior: smooth;
+}
+
+/* Hide default scrollbar for a clean UI */
+.mobile-container::-webkit-scrollbar {
+  width: 4px;
+}
+.mobile-container::-webkit-scrollbar-track {
+  background: var(--color-bg-yellow);
+}
+.mobile-container::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
+}
+
+/* Typography Helpers */
+.font-wedding {
+  font-family: var(--font-wedding);
+}
+.font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: 1.5px;
+}
+.font-main {
+  font-family: var(--font-main);
+}
+
+/* Custom premium buttons */
+.btn-gold {
+  background: linear-gradient(135deg, var(--color-gold) 0%, #F57F17 100%);
+  color: var(--color-dark-green) !important;
+  font-family: var(--font-heading);
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: 2px solid var(--color-white);
+  box-shadow: var(--shadow-gold);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(251, 192, 45, 0.6);
+}
+
+.btn-gold:active {
+  transform: translateY(1px);
+}
+
+/* Decorative floral borders using pure SVG backgrounds */
+.marigold-border {
+  background-image: radial-gradient(circle, var(--color-gold) 20%, transparent 20%),
+                    radial-gradient(circle, var(--color-gold) 20%, transparent 20%);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
+}
+
+/* Keyframe Animations */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(251, 192, 45, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(251, 192, 45, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(251, 192, 45, 0);
+  }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s infinite;
+}
+
+/* Curtain transition overlay styles */
+.curtain-overlay-left, .curtain-overlay-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: var(--color-green);
+  z-index: 9999;
+}
+.curtain-overlay-left { left: 0; }
+.curtain-overlay-right { right: 0; }
