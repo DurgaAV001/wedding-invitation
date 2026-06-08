@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import WorkIcon from '@mui/icons-material/Work';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PeopleIcon from '@mui/icons-material/People';
@@ -11,6 +11,7 @@ import groomImg from '../assets/image/groom.jpeg';
 import brideImg from '../assets/image/bride.jpeg';
 
 export const ProfileSection: React.FC = () => {
+
   // Decorative Hanging Garland (Mango Leaves & Marigolds) SVG
   const renderHangingGarland = () => (
     <svg width="100%" height="24" viewBox="0 0 240 24" fill="none" style={{ color: 'var(--color-gold)', opacity: 0.95, display: 'block', margin: '0 auto' }}>
@@ -61,59 +62,85 @@ export const ProfileSection: React.FC = () => {
   const renderFamilyDetails = (type: 'groom' | 'bride') => {
     const isGroom = type === 'groom';
 
-    const members = isGroom
+    const members = isGroom 
       ? [
-        {
-          relation: 'PARENTS',
-          names: ['Mr. Thiyagarajan & Mrs. Kanchana'],
-          icon: <PeopleIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
-        },
-        {
-          relation: 'SISTER & BROTHER-IN-LAW',
-          names: ['Mrs. Mohana Priya & Mr. Sailendra Prasath'],
-          icon: <StarIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
-        },
-        {
-          relation: 'NIECE',
-          names: ['Ezhil Nila'],
-          icon: <ChildCareIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
-          isSpecial: true,
-        }
-      ]
+          {
+            relation: 'PARENTS',
+            names: ['Mr. Thiyagarajan & Mrs. Kanchana'],
+            icon: <PeopleIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
+          },
+          {
+            relation: 'SISTER & BROTHER-IN-LAW',
+            names: ['Mrs. Mohana Priya & Mr. Sailendra Prasath'],
+            icon: <StarIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
+          },
+          {
+            relation: 'NIECE',
+            names: ['Ezhil Nila'],
+            icon: <ChildCareIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
+            isSpecial: true,
+          }
+        ]
       : [
-        {
-          relation: 'PARENTS',
-          names: ['Mr. Vadivel A M & Mrs. Shanthi P M'],
-          icon: <PeopleIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
-        },
-        {
-          relation: 'ELDER SISTER & BROTHER-IN-LAW',
-          names: ['Mrs. Vinothini A V & Mr. Gopinath'],
-          icon: <StarIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
-        },
-        {
-          relation: 'NEPHEWS',
-          names: ['Lenin Maran & Ela Maran'],
-          icon: <ChildCareIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
-          isSpecial: true,
+          {
+            relation: 'PARENTS',
+            names: ['Mr. Vadivel A M & Mrs. Shanthi P M'],
+            icon: <PeopleIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
+          },
+          {
+            relation: 'ELDER SISTER & BROTHER-IN-LAW',
+            names: ['Mrs. Vinothini A V & Mr. Gopinath'],
+            icon: <StarIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
+          },
+          {
+            relation: 'NEPHEWS',
+            names: ['Lenin Maran & Ela Maran'],
+            icon: <ChildCareIcon style={{ fontSize: '1.15rem', color: '#FFFFFF' }} />,
+            isSpecial: true,
+          }
+        ];
+
+    // motion variants for staggering family members
+    const containerVariants = {
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.12,
+          delayChildren: 0.05
         }
-      ];
+      }
+    } as const;
+
+    const itemVariants = {
+      hidden: { opacity: 0, y: 15 },
+      visible: { 
+        opacity: 1, 
+        y: 0, 
+        transition: { duration: 0.4, ease: 'easeOut' } 
+      }
+    } as const;
 
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-          width: '100%',
-          maxWidth: '290px',
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-40px" }}
+        style={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          gap: '12px', 
+          width: '100%', 
+          maxWidth: '290px', 
           margin: '0 auto',
           padding: '6px 0'
         }}
       >
         {members.map((member, index) => (
-          <div
+          <motion.div
             key={index}
+            variants={itemVariants}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -127,7 +154,7 @@ export const ProfileSection: React.FC = () => {
             }}
           >
             {/* Left Circular Medallion */}
-            <div
+            <div 
               style={{
                 width: '38px',
                 height: '38px',
@@ -147,12 +174,12 @@ export const ProfileSection: React.FC = () => {
 
             {/* Right Details */}
             <div style={{ textAlign: 'left', flexGrow: 1 }}>
-              <span
+              <span 
                 className="font-heading"
-                style={{
-                  fontSize: '0.55rem',
-                  color: 'var(--color-gold-dark)',
-                  fontWeight: 800,
+                style={{ 
+                  fontSize: '0.55rem', 
+                  color: 'var(--color-gold-dark)', 
+                  fontWeight: 800, 
                   letterSpacing: '1px',
                   display: 'block',
                   lineHeight: '1.2'
@@ -160,11 +187,11 @@ export const ProfileSection: React.FC = () => {
               >
                 {member.relation}
               </span>
-              <div
+              <div 
                 className="font-main"
-                style={{
-                  fontSize: '0.74rem',
-                  color: 'var(--color-dark-green)',
+                style={{ 
+                  fontSize: '0.74rem', 
+                  color: 'var(--color-dark-green)', 
                   fontWeight: 650,
                   marginTop: '1px',
                   lineHeight: '1.3'
@@ -185,9 +212,9 @@ export const ProfileSection: React.FC = () => {
             <div style={{ position: 'absolute', right: -10, bottom: -10, opacity: 0.04, transform: 'rotate(45deg)', pointerEvents: 'none' }}>
               <FavoriteIcon style={{ fontSize: '4.5rem', color: 'var(--color-green)' }} />
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     );
   };
 
@@ -225,10 +252,10 @@ export const ProfileSection: React.FC = () => {
 
       {/* --- GROOM SECTION --- */}
       <motion.div
-        initial="initial"
-        whileHover="hover"
-        whileTap="hover"
+        initial={{ opacity: 0, x: -60 }}
+        whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
         style={{
           width: '88%',
           alignSelf: 'flex-start',
@@ -239,15 +266,11 @@ export const ProfileSection: React.FC = () => {
           position: 'relative',
           overflow: 'hidden',
           textAlign: 'center',
-          cursor: 'pointer',
         }}
       >
         {/* Background Image Layer with Zoom Effect */}
         <motion.div
-          variants={{
-            initial: { scale: 1 },
-            hover: { scale: 1.06 }
-          }}
+          whileHover={{ scale: 1.06 }}
           transition={{ duration: 0.5 }}
           style={{
             position: 'absolute',
@@ -278,11 +301,11 @@ export const ProfileSection: React.FC = () => {
         />
 
         {/* Content Wrapper to sit above the background photo overlay */}
-        <div style={{ position: 'relative', zIndex: 3, padding: '16px 14px', width: '100%', height: '100%' }}>
+        <div style={{ position: 'relative', zIndex: 3, padding: '22px 14px', width: '100%', height: '100%' }}>
           {renderCornerFiligree()}
           {renderHangingGarland()}
 
-          <div style={{ marginTop: '15px' }}>
+          <div style={{ marginTop: '12px' }}>
             <span className="font-heading" style={{ fontSize: '0.65rem', color: 'var(--color-gold)', fontWeight: 700, letterSpacing: '1.5px' }}>
               THE GROOM
             </span>
@@ -295,41 +318,32 @@ export const ProfileSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Hint text that fades out on hover */}
-          <motion.div
-            variants={{
-              initial: { opacity: 0.65, height: 'auto', marginTop: 12 },
-              hover: { opacity: 0, height: 0, marginTop: 0, overflow: 'hidden' }
-            }}
-            transition={{ duration: 0.3 }}
-            style={{ fontSize: '0.62rem', color: 'rgba(255, 255, 255, 0.7)', fontStyle: 'italic' }}
-          >
-          </motion.div>
-
-          {/* Growing Family Details Container */}
-          <AnimatePresence>
-            <motion.div
-              variants={{
-                initial: { height: 0, opacity: 0 },
-                hover: { height: 'auto', opacity: 1 }
+          {/* Family Details directly inline */}
+          <div style={{ borderTop: '1px dashed rgba(251, 192, 45, 0.4)', paddingTop: '15px', marginTop: '18px' }}>
+            <span 
+              className="font-heading" 
+              style={{ 
+                fontSize: '0.62rem', 
+                color: 'var(--color-gold)', 
+                fontWeight: 700, 
+                letterSpacing: '1.5px',
+                display: 'block',
+                marginBottom: '10px'
               }}
-              transition={{ duration: 0.45, ease: 'easeInOut' }}
-              style={{ overflow: 'hidden' }}
             >
-              <div style={{ borderTop: '1px dashed rgba(251, 192, 45, 0.35)', paddingTop: '15px', marginTop: '15px' }}>
-                {renderFamilyDetails('groom')}
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              FAMILY & LOVED ONES
+            </span>
+            {renderFamilyDetails('groom')}
+          </div>
         </div>
       </motion.div>
 
       {/* --- BRIDE SECTION --- */}
       <motion.div
-        initial="initial"
-        whileHover="hover"
-        whileTap="hover"
+        initial={{ opacity: 0, x: 60 }}
+        whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
         style={{
           width: '88%',
           alignSelf: 'flex-end',
@@ -340,15 +354,11 @@ export const ProfileSection: React.FC = () => {
           position: 'relative',
           overflow: 'hidden',
           textAlign: 'center',
-          cursor: 'pointer',
         }}
       >
         {/* Background Image Layer with Zoom Effect */}
         <motion.div
-          variants={{
-            initial: { scale: 1 },
-            hover: { scale: 1.06 }
-          }}
+          whileHover={{ scale: 1.06 }}
           transition={{ duration: 0.5 }}
           style={{
             position: 'absolute',
@@ -379,11 +389,11 @@ export const ProfileSection: React.FC = () => {
         />
 
         {/* Content Wrapper to sit above the background photo overlay */}
-        <div style={{ position: 'relative', zIndex: 3, padding: '16px 14px', width: '100%', height: '100%' }}>
+        <div style={{ position: 'relative', zIndex: 3, padding: '22px 14px', width: '100%', height: '100%' }}>
           {renderCornerFiligree()}
           {renderHangingGarland()}
 
-          <div style={{ marginTop: '15px' }}>
+          <div style={{ marginTop: '12px' }}>
             <span className="font-heading" style={{ fontSize: '0.65rem', color: 'var(--color-gold)', fontWeight: 700, letterSpacing: '1.5px' }}>
               THE BRIDE
             </span>
@@ -396,35 +406,26 @@ export const ProfileSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Hint text that fades out on hover */}
-          <motion.div
-            variants={{
-              initial: { opacity: 0.65, height: 'auto', marginTop: 12 },
-              hover: { opacity: 0, height: 0, marginTop: 0, overflow: 'hidden' }
-            }}
-            transition={{ duration: 0.3 }}
-            style={{ fontSize: '0.62rem', color: 'rgba(255, 255, 255, 0.7)', fontStyle: 'italic' }}
-          >
-            Hover or Tap card to view family details
-          </motion.div>
-
-          {/* Growing Family Details Container */}
-          <AnimatePresence>
-            <motion.div
-              variants={{
-                initial: { height: 0, opacity: 0 },
-                hover: { height: 'auto', opacity: 1 }
+          {/* Family Details directly inline */}
+          <div style={{ borderTop: '1px dashed rgba(251, 192, 45, 0.4)', paddingTop: '15px', marginTop: '18px' }}>
+            <span 
+              className="font-heading" 
+              style={{ 
+                fontSize: '0.62rem', 
+                color: 'var(--color-gold)', 
+                fontWeight: 700, 
+                letterSpacing: '1.5px',
+                display: 'block',
+                marginBottom: '10px'
               }}
-              transition={{ duration: 0.45, ease: 'easeInOut' }}
-              style={{ overflow: 'hidden' }}
             >
-              <div style={{ borderTop: '1px dashed rgba(251, 192, 45, 0.35)', paddingTop: '15px', marginTop: '15px' }}>
-                {renderFamilyDetails('bride')}
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              FAMILY & LOVED ONES
+            </span>
+            {renderFamilyDetails('bride')}
+          </div>
         </div>
       </motion.div>
+
     </div>
   );
 };
