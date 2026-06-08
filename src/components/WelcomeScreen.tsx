@@ -153,7 +153,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onOpen }) => {
               lineHeight: 1.1,
             }}
           >
-            Naveen Raj T
+            Naveen Raj
           </motion.h1>
 
           {/* weds icon */}
